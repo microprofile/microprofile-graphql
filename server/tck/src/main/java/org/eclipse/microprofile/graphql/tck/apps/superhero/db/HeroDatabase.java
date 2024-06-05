@@ -162,9 +162,10 @@ public class HeroDatabase {
              "\"realName\":\"Tony Stark\"," +
              "\"primaryLocation\":\"Los Angeles, CA\"," +
              "\"superPowers\":[\"wealth\",\"engineering\"]," +
+             "\"powerSource\":{\"netWorth\":12400000000.00," +
              "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
              "\"equipment\":[{\"id\": 1001, \"name\": \"Iron Man Suit\", \"powerLevel\": 18, " +
-             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false, \"dateCreated\": \"12 February 1967 at 11:45 in Africa/Johannesburg\"," + 
+             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false, \"dateCreated\": \"12 February 1967 at 11:45 in Africa/Johannesburg\"," +
              "\"dateLastUsed\": \"30 Jan 2020 at 17:55 in zone +0200\" }]," +
              "\"colorOfCostume\":\"Red\"," +
              "\"idNumber\":\"ID-12345678\"," +
@@ -177,6 +178,7 @@ public class HeroDatabase {
              "\"realName\":\"Peter Parker\"," +
              "\"primaryLocation\":\"New York, NY\"," +
              "\"superPowers\":[\"Spidey Sense\",\"Wall-Crawling\",\"Super Strength\",\"Web-shooting\"]," +
+             "\"powerSource\":{\"dateOfEvent\":\"06/18/2016\",\"medicalNotes\":\"Bit by a radioactive spider\"}," +
              "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
              "\"colorOfCostume\":\"Red\"," +
              "\"idNumber\":\"ID-78904321\"," +

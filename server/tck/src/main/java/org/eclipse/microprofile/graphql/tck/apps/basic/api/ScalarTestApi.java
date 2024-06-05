@@ -312,4 +312,12 @@ public class ScalarTestApi {
         return person;
     }
 
+    @Query
+    public BasicUnion basicUnionSelection(@Name("name") String name, @Name("count") Integer count) {
+        if (name != null) {
+            return new UnionMember(name);
+        }
+        return new AnotherUnionMember(count == null ? 0 : count);
+    }
+
 }

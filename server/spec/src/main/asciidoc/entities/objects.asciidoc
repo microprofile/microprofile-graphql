@@ -27,11 +27,12 @@ Optionally it can also:
 - Be annotated with `@Type` (for return objects) to name the entity,
 - Be annotated with `@Input` (for input parameter) to name the entity,
 - Be annotated with `@Interface` (for interfaces) to name the entity,
+- Be annotated with `@Union` (for unions) to name the entity,
 - Be annotated with `@Name` to name the entity.
 
-The name of the `type`, `input` or `interface` will be determined as follows:
+The name of the `type`, `input`, `interface`, or `union` will be determined as follows:
 
-- If the value of the `@Type` / `@Input` / `@Interface` annotation is present and not empty, use that as the name, else
+- If the value of the `@Type` / `@Input` / `@Interface` / `@Union` annotation is present and not empty, use that as the name, else
 - If the value of the `@Name` annotation is present and not empty, use that as the name, else
 - Use the Java class name (without the package prefix).
 
@@ -60,12 +61,13 @@ The `@Type` annotation is used for output entities while the `@Input` annotation
 Normally these annotations are unnecessary if the type can be serialized and/or deserialized, and if the type
 is specified in a query or mutation method. These annotations can be used to specify the name of the type in the GraphQL
 schema; by default, the entity name in the schema will be the same as the simple class name of the entity type for
-output types; for input types, the simple class name is used with "Input" appended. Thus, an entity class named 
+output types; for input types, the simple class name is used with "Input" appended. Thus, an entity class named
 `com.mypkg.Tree` would create a GraphQL schema type called "Tree" and an input type called "TreeInput".
 
+[[interfaces]]
 ==== GraphQL interfaces
 
-It is possible for output types to be defined as a Java interfaces. GraphQL interfaces are very similar in 
+It is possible for output types to be defined as a Java interfaces. GraphQL interfaces are very similar in
 concept to Java interfaces, in that other types may implement an interface. This
 allows the GraphQL schema to better align with the Java application's model and allows clients to retrieve the same data
 (fields) on multiple different entity types.  GraphQL interfaces are created with a Java interface type and might be annotated
@@ -125,7 +127,81 @@ type Villain implements Character {
 
 ===== Limitations
 
-At the moment the spec does not support interfaces on input types. 
+At the moment the spec does not support interfaces on input types.
+
+[[unions]]
+==== GraphQL unions
+
+Java doesn't have a direct way to represent a GraphQL union, but one can be modeled well using Java interfaces
+containing no defined common fields. GraphQL unions are created with a Java interface type and must be annotated
+with `@Union`. The MP GraphQL implementation must then generate a schema where every class in the application
+that implements that Java interface must have a type in the schema that is a member of the GraphQL union. For
+example:
+
+[source,java,numbered]
+----
+import jdk.jfr.Description;@Union
+public interface PowerSource {
+
+}
+
+public class Magic implements PowerSource {
+
+    @NonNull
+    @Description("Can this magic be learned")
+    private boolean canBeLearned;
+
+    // ...
+}
+
+public class GeneticMutation implements PowerSource {
+
+  @NonNull
+  @Description("Was this mutation present at birth")
+  private boolean isPresentAtBirth;
+
+  @Description("The date this mutation occurred")
+  private LocalDate dateOfMutation;
+
+  // ...
+}
+
+public class ExtremeWealth implements PowerSource {
+
+  @NonNull
+  @Description("The net worth granting this character powers")
+  private Float netWorth;
+
+  // ...
+}
+----
+
+This should generate a schema like:
+
+[source,graphql,numbered]
+----
+type Magic {
+  "Can this magic be learned"
+  canBeLearned: Boolean!
+  # ...
+}
+
+type GeneticMutation {
+  "Was this mutation present at birth"
+  isPresentAtBirth: Boolean!
+
+  "The date this mutation occurred"
+  dateOfMutation: String
+  # ...
+}
+
+type ExtremeWealth {
+  "The net worth granting this character powers"
+  netWorth: Float!
+}
+
+union PowerSource = Magic | GeneticMutation | ExtremeWealth
+----
 
 [[fields]]
 ==== Fields
@@ -162,7 +238,7 @@ public class MyQueries {
 }
 ----
 
-The above query adds a new field to the `SuperHero` GraphQL entity type, called `currentLocation`.  This field is not 
+The above query adds a new field to the `SuperHero` GraphQL entity type, called `currentLocation`.  This field is not
 part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This association is made by using the
 `@Source` annotation. Also note that the `currentLocation` method will only be invoked if the client requests the
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
@@ -187,7 +263,7 @@ You can also choose to expose the method containing the `@Source` annotation as 
 ----
 @GraphQLApi
 public class MyQueries {
-    
+
     @Query
     public Location currentLocation(@Source SuperHero hero) {
         return getLocationForHero(hero.getName());

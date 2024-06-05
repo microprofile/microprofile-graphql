@@ -39,6 +39,7 @@ import org.eclipse.microprofile.graphql.NumberFormat;
 public class SuperHero implements Character {
     private List<Team> teamAffiliations;
     private List<@NonNull String> superPowers;
+    private PowerSource powerSource;
     private String primaryLocation;
     @Description("Super hero name/nickname")
     private String name;
@@ -64,39 +65,41 @@ public class SuperHero implements Character {
 
     @JsonbNumberFormat(value = "¤ ###,###.##",locale = "en-US")
     private Double bankBalance;
-    
+
     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-US")
     private BigDecimal netWorth;
-    
+
     @JsonbNumberFormat(value = "###.## 'ml'", locale = "en-GB")
     private Float favouriteDrinkSize;
-    
+
     private List<BigDecimal> lastKnownCoordinates;
-    
+
     private List<List<BigDecimal>> track;
 
     private Set<String> beenThere;
-    
+
     private ShirtSize sizeOfTShirt;
 
     private List<LocalDate> importantDates;
-    
+
     private List<Integer> kidsAges;
-    
+
     @DateFormat("dd MMMM yyyy")
     private LocalDate birthday;
-    
+
     public SuperHero(){
     }
-    
-    public SuperHero(List<Team> teamAffiliations, 
-                     List<String> superPowers, 
-                     String primaryLocation, 
-                     String name, 
+
+    public SuperHero(List<Team> teamAffiliations,
+                     List<String> superPowers,
+                     PowerSource powerSource,
+                     String primaryLocation,
+                     String name,
                      String realName) {
 
         this.teamAffiliations = teamAffiliations;
         this.superPowers = superPowers;
+        this.powerSource = powerSource;
         this.primaryLocation = primaryLocation;
         this.name = name;
         this.realName = realName;
@@ -108,6 +111,10 @@ public class SuperHero implements Character {
 
     public List<String> getSuperPowers() {
         return superPowers;
+    }
+
+    public PowerSource getPowerSource() {
+        return powerSource;
     }
 
     @Description("Location where you are most likely to find this hero")
@@ -261,7 +268,7 @@ public class SuperHero implements Character {
     public void setBeenThere(Set<String> beenThere) {
         this.beenThere = beenThere;
     }
-    
+
     public List<@DateFormat("dd/MM") LocalDate> getImportantDates() {
         return importantDates;
     }
@@ -287,8 +294,8 @@ public class SuperHero implements Character {
     @Name("dateOfBirth")
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
-    }    
-    
+    }
+
     public enum ShirtSize {
         S,
         M,
@@ -300,17 +307,18 @@ public class SuperHero implements Character {
 
     @Override
     public String toString() {
-        return "SuperHero{" 
-                + ", superPowers=" + superPowers 
-                + ", primaryLocation=" + primaryLocation 
-                + ", name=" + name 
-                + ", realName=" + realName 
-                + ", dateOfLastCheckin=" + dateOfLastCheckin 
-                + ", patrolStartTime=" + patrolStartTime 
-                + ", timeOfLastBattle=" + timeOfLastBattle 
-                + ", costumeColor=" + costumeColor 
-                + ", namesOfKnownEnemies=" + namesOfKnownEnemies 
-                + ", idNumber=" + idNumber 
+        return "SuperHero{"
+                + ", superPowers=" + superPowers
+                + ", powerSource=" + powerSource
+                + ", primaryLocation=" + primaryLocation
+                + ", name=" + name
+                + ", realName=" + realName
+                + ", dateOfLastCheckin=" + dateOfLastCheckin
+                + ", patrolStartTime=" + patrolStartTime
+                + ", timeOfLastBattle=" + timeOfLastBattle
+                + ", costumeColor=" + costumeColor
+                + ", namesOfKnownEnemies=" + namesOfKnownEnemies
+                + ", idNumber=" + idNumber
                 + ", sizeOfTShirt=" + sizeOfTShirt + '}';
     }
 }

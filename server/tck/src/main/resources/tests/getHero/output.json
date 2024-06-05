@@ -8,6 +8,9 @@
         "wealth",
         "engineering"
       ],
+      "powerSource": {
+        "netWorth": 12400000000.00
+      },
       "teamAffiliations": [
         {
           "name": "Avengers",

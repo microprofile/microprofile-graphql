@@ -1,10 +1,22 @@
 {
   superHero(name:"Iron Man") {
-    
+
     name
     primaryLocation
     realName
     superPowers
+    powerSource {
+      ... on Magic {
+        canBeLearned
+      }
+      ... on GeneticMutation {
+        isPresentAtBirth
+        dateOfMutation
+      }
+      ... on ExtremeWealth {
+        netWorth
+      }
+    }
     teamAffiliations {
       name
       members{
