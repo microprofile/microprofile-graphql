@@ -36,7 +36,6 @@ endif::[]
 
 include::license-efsl.adoc[]
 
-== MicroProfile GraphQL
 include::intro.asciidoc[]
 
 include::entities.asciidoc[]
