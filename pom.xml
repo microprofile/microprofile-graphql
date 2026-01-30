@@ -34,8 +34,8 @@
 
     <properties>
         <inceptionYear>2019</inceptionYear>
-        <version.testng>7.10.2</version.testng>
-        <version.arquillian>1.9.1.Final</version.arquillian>
+        <version.testng>7.12.0</version.testng>
+        <version.arquillian>1.10.0.Final</version.arquillian>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
     </properties>
 
