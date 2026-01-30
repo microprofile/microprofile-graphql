@@ -16,5 +16,8 @@
 <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd"
-       bean-discovery-mode="all">
+       bean-discovery-mode="none">
+    <!-- Changed from "all" to "none" to prevent CDI from discovering beans in this jar.
+         The TCK is a test library - beans should only be discovered in the deployed application,
+         not in this jar. This prevents duplicate bean detection when the jar is included in test deployments. -->
 </beans>

@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.eclipse.microprofile</groupId>
         <artifactId>microprofile-parent</artifactId>
-        <version>2.5</version>
+        <version>3.4</version>
     </parent>
     <groupId>org.eclipse.microprofile.graphql</groupId>
     <artifactId>microprofile-graphql-parent</artifactId>
@@ -34,7 +34,32 @@
 
     <properties>
         <inceptionYear>2019</inceptionYear>
+        <version.testng>7.12.0</version.testng>
+        <version.arquillian>1.10.0.Final</version.arquillian>
+        <version.shrinkwrap>1.2.6</version.shrinkwrap>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${version.testng}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${version.arquillian}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-api</artifactId>
+                <version>${version.shrinkwrap}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <issueManagement>
         <system>GitHub</system>

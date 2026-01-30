@@ -18,7 +18,7 @@ package org.eclipse.microprofile.graphql;
 
 /**
  * Holding all available config keys
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public interface ConfigKey {

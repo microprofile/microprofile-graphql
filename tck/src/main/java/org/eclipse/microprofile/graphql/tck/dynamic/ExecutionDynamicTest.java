@@ -59,7 +59,7 @@ import jakarta.json.JsonReader;
 /**
  * This test runs all test defined in the implementation 'src/test/resources' folder and all test included here in the
  * archive's /tests folder
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class ExecutionDynamicTest extends Arquillian {

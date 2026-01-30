@@ -33,7 +33,7 @@ import org.testng.annotations.DataProvider;
 /**
  * Provide test data for GraphQL Schema. This will find and load all csv files in the test folder and use that as test
  * data against the schema
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class SchemaTestDataProvider {

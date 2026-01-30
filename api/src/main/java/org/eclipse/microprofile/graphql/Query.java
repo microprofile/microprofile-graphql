@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Specifies that the annotated method provides the implementation (ie. the resolver) for a GraphQL query. <br>
  * <br>
  * For example, a user might annotate a method as such:
- * 
+ *
  * <pre>
  * public class CharacterService {
  *     {@literal @}Query("friendsOf")
@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * type Query {
  *    "Returns all the friends of a character"

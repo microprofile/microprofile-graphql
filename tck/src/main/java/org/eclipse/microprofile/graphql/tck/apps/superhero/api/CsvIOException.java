@@ -19,7 +19,7 @@ import java.io.IOException;
 
 /**
  * Extending a IOException to test transitive blacklist
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class CsvIOException extends IOException {

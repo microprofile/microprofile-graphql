@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Sets the description in the GraphQL schema for the target field, type, parameter, etc. <br>
  * <br>
  * For example, a user might annotate a type and field as such:
- * 
+ *
  * <pre>
  * {@literal @}Description("Vehicle for traveling between star systems")
  * public class Starship {
@@ -40,7 +40,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * "Vehicle for traveling between star systems"
  * type Starship {

@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * marked as non-null in the schema. <br>
  * <br>
  * For example, a user might annotate a class' property as such:
- * 
+ *
  * <pre>
  * {@literal @}Type("Starship")
  * {@literal @}Input("StarshipInput")
@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * type Starship {
  *   id: String
@@ -56,7 +56,7 @@ import java.lang.annotation.Target;
  *   length: Float!
  * }
  * </pre>
- * 
+ *
  * <br>
  * <br>
  * Note that all primitive fields/properties are automatically considered non-null unless they are also annotated with a

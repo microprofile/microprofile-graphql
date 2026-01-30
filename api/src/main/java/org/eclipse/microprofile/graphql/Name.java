@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Allows users to name a field or argument in the GraphQL Schema <br>
  * <br>
  * For example, a user might annotate a method's parameter as such:
- * 
+ *
  * <pre>
  * public class CharacterService {
  *     {@literal @}Query("searchByName")
@@ -39,15 +39,15 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * type Query {
  *         searchByName(name: String = "Han Solo"): [Character]
  *     }
  * </pre>
- * 
+ *
  * Or a user might annotate a class' property as such:
- * 
+ *
  * <pre>
  * {@literal @}Type("Starship")
  * {@literal @}Input("StarshipInput")
@@ -64,7 +64,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * "A starship in Star Wars"
  * input Starship {

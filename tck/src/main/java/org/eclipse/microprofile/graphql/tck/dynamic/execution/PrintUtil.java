@@ -39,7 +39,7 @@ import jakarta.json.stream.JsonGenerator;
 
 /**
  * Print the Test data to output
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class PrintUtil {

@@ -39,7 +39,7 @@ import java.lang.annotation.Target;
  * <br>
  * <br>
  * For example, a user might annotate a method's parameter as such:
- * 
+ *
  * <pre>
  * public class CharacterService {
  *      {@literal @}Inject TwitterService twitterService;
@@ -54,10 +54,10 @@ import java.lang.annotation.Target;
  * </pre>
  * <p>
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * type Character {
- *    # Other fields ... 
+ *    # Other fields ...
  *    tweetsForMe(last: Int): [Tweet]
  * }
  * </pre>

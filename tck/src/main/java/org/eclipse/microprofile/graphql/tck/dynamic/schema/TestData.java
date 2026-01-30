@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Simple Holder for Test Data sets
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class TestData {
