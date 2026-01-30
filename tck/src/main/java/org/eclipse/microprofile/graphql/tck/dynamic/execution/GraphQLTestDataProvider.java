@@ -47,7 +47,7 @@ import jakarta.json.JsonReader;
 /**
  * Provide test data for GraphQL Endpoint from the implementation's /src/test/resources/tests directory and the
  * specification's jar file (in /tests)
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class GraphQLTestDataProvider {

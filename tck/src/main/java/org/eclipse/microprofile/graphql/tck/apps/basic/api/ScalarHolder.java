@@ -31,7 +31,7 @@ import jakarta.json.bind.annotation.JsonbNumberFormat;
 
 /**
  * Plain POJO with scalar fields
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class ScalarHolder {

@@ -24,24 +24,24 @@ import java.lang.annotation.Target;
 
 /**
  * Marks a class as a GraphQL Endpoint.
- * 
+ *
  * <br>
  * <br>
  * For example:
- * 
+ *
  * <pre>
  * {@literal @}GraphQLApi
  * {@literal @}RequestScoped
  * public class MembershipGraphQLApi {
- *     
+ *
  *     {@literal @}Inject
  *     private MembershipService membershipService;
- *     
- *     {@literal @}Query("memberships") 
+ *
+ *     {@literal @}Query("memberships")
  *     public List{@literal <}Membership{@literal >} getAllMemberships() {
  *         return getAllMemberships(Optional.empty());
  *     }
- * 
+ *
  *     // Other GraphQL queries and mutations
  * }
  * </pre>

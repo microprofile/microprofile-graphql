@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Maps of the annotated Java enum to a GraphQL enum. <br>
  * <br>
  * For example, a user might annotate a enum as such:
- * 
+ *
  * <pre>
  * {@literal @}Enum("ClothingSize")
  * public enum ShirtSize {
@@ -40,7 +40,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  *   enum ClothingSize {
  *    HULK

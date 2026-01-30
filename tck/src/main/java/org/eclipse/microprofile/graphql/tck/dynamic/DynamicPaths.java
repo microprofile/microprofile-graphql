@@ -27,7 +27,7 @@ import java.nio.file.Paths;
 
 /**
  * Where we look for tests in both the Spec level and the implementation level
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class DynamicPaths {

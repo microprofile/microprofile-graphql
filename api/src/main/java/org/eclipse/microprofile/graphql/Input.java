@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Maps the annotated class to a GraphQL input type. <br>
  * <br>
  * For example, a user might annotate a class as such:
- * 
+ *
  * <pre>
  * {@literal @}Input("StarshipInput")
  * {@literal @}Description("Input type for a starship")
@@ -40,7 +40,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * "Input type for a starship"
  * input StarshipInput {

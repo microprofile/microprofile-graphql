@@ -45,7 +45,7 @@ import org.testng.annotations.Test;
 
 /**
  * Tests that the schema is available at graphql/schema.graphql and that it contains the proper content.
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class SchemaDynamicValidityTest extends Arquillian {

@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Specifies that the annotated method provides the implementation (ie. the resolver) for a GraphQL mutation. <br>
  * <br>
  * For example, a user might annotate a method as such:
- * 
+ *
  * <pre>
  * public class CharacterService {
  *     {@literal @}Mutation("addCharacter")
@@ -38,7 +38,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * type Mutation {
  *     "Save a new character"

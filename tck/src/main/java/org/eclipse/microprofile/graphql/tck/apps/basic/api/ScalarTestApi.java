@@ -35,7 +35,7 @@ import jakarta.json.bind.annotation.JsonbProperty;
 
 /**
  * Scalar testing. This allows basic testing of the scalar mapping as defined in GraphQL Entities-Scalars section.
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 @GraphQLApi

@@ -34,7 +34,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
  * Helper to create the deployable unit to test against
- * 
+ *
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class DeployableUnit {

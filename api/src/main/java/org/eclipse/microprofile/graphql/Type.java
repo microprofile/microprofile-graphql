@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Maps of the annotated Java class to a GraphQL type. <br>
  * <br>
  * For example, a user might annotate a class as such:
- * 
+ *
  * <pre>
  * {@literal @}Type("Starship")
  * {@literal @}Description("A starship in Star Wars")
@@ -40,7 +40,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
- * 
+ *
  * <pre>
  * "A starship in Star Wars"
  * type Starship {

@@ -20,7 +20,7 @@ package org.eclipse.microprofile.graphql;
  * A GraphQLException is used to pass error information back to the client. Instances of GraphQLException and it's
  * subclasses will pass the <code>message</code> field back to the client. The optional <code>ExceptionType</code> may
  * also be specified.
- * 
+ *
  * While it is expected that MP GraphQL implementations will return the message to the client, implementations must not
  * return the stack trace not the cause to the client.
  */
