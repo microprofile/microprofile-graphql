@@ -24,6 +24,8 @@ include::components/queries.asciidoc[]
 
 include::components/mutations.asciidoc[]
 
+include::components/subscriptions.asciidoc[]
+
 include::components/generated_schema.asciidoc[]
 
 include::components/arguments.asciidoc[]

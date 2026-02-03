@@ -22,3 +22,5 @@ server/target/
 server/tck/target/
 spec/target/
 tck/target/
+/.claude/
+/CLAUDE.md

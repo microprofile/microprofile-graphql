@@ -139,8 +139,9 @@ sources with a single API.
 The intent of the MicroProfile GraphQL specification is to provide a "code-first" set of APIs that will enable users to
 quickly develop portable GraphQL-based applications in Java.
 
-There are 2 main requirements for all implementations of this specification, namely:
+There are 3 main requirements for all implementations of this specification, namely:
 
-* Generate and make the GraphQL Schema available. This is done by looking at the annotations in the users code, 
-and must include all GraphQL Queries and Mutations as well as all entities as defined implicitly via the response type or argument(s) of Queries and Mutations.
+* Generate and make the GraphQL Schema available. This is done by looking at the annotations in the users code,
+and must include all GraphQL Queries, Mutations, and Subscriptions as well as all entities as defined implicitly via the response type or argument(s) of Queries, Mutations, and Subscriptions.
 * Execute GraphQL requests. This will be in the form of either a Query or a Mutation. As a minimum the specification must support executing these requests via HTTP.
+* Execute GraphQL Subscriptions. As a minimum the specification must support executing subscription requests via WebSocket using the graphql-ws protocol (https://github.com/enisdenjo/graphql-ws/blob/master/PROTOCOL.md).
