@@ -107,3 +107,8 @@ Like query methods, mutation methods are expected to return some value, thus it 
 method with a `void` return type to be annotated with `@Mutation`. If a void method is annotated with the `@Mutation`
 annotation, the implementation must prevent the application from starting and should provide a log message indicating
 that this is not allowed.
+
+==== Transport Mechanism
+
+Mutation operations are executed over HTTP using the same transport mechanism as queries. See the Transport Mechanism
+section in <<queries>> for details on the GraphQL over HTTP specification compliance.

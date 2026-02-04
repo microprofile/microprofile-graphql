@@ -122,3 +122,14 @@ By it's very nature, query methods must return some value, thus it is considered
 `void` return type to be annotated with `@Query`. If a void method is annotated with the `@Query` annotation, the
 implementation must prevent the application from starting and should provide a log message indicating that this is not
 allowed.
+
+==== Transport Mechanism
+
+Query operations are executed over HTTP. Implementations should follow the GraphQL over HTTP specification
+(https://github.com/graphql/graphql-over-http) which provides guidelines for executing GraphQL operations via HTTP,
+including request format, response format, and status codes. While this specification is currently in draft status,
+it represents community consensus on HTTP transport for GraphQL queries and mutations.
+
+Implementations must support POST requests with JSON-encoded bodies containing the GraphQL query, variables, and
+operation name. Support for GET requests and other HTTP features described in the GraphQL over HTTP specification
+is recommended but not required.

@@ -1,0 +1,158 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[subscriptions]]
+=== Subscriptions
+
+Subscriptions enable clients to receive real-time updates when events occur. Unlike queries and mutations which return
+a single response, subscriptions establish a long-lived connection that sends multiple values over time.
+
+==== API Annotation
+
+For classes that are annotated with `@GraphQLApi`, implementations must create a subscription in the schema for every
+method that is annotated with `@Subscription`.
+
+The subscription's name can be specified in the value parameter of the `@Subscription` annotation, or is generated from
+the method name if no annotation value is provided.
+
+==== Return Types
+
+Subscription methods must return a reactive type that emits a stream of values over time. The MicroProfile GraphQL
+specification requires implementations to support `java.util.concurrent.Flow.Publisher<T>` as the return type.
+Implementations may provide support for additional reactive types (such as reactive streams `Publisher<T>` or
+framework-specific types).
+
+==== Basic POJO Example
+
+.Example
+[source,java,numbered]
+----
+@Subscription
+public Flow.Publisher<SuperHero> heroUpdates() {
+    // Return a publisher that emits SuperHero updates
+    return publisherService.getHeroUpdateStream();
+}
+----
+
+.Example with Argument
+[source,java,numbered]
+----
+@Subscription
+public Flow.Publisher<SuperHero> heroByName(@Name("name") String heroName) {
+    return publisherService.getHeroUpdateStream(heroName);
+}
+----
+
+Note that generic types other than subtypes of `java.util.Collection` (such as `java.util.List` or `java.util.Set`)
+are not allowed to be specified within the publisher's generic type parameter. Implementations may allow additional
+types (such as `java.util.Map`), but the behavior for these return types are undefined.
+
+==== Name
+
+The name of a subscription in the schema is obtained using the following order:
+
+* if the method is annotated with a `@Subscription` annotation containing a non-empty String for it's value, that
+String value is used as the subscription name.
+* if the method is annotated with a `@Name` annotation containing a non-empty String for it's value, that String value
+is used as the subscription name.
+* if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that
+String value is used as the subscription name.
+* if no other name can be determined, the Java method name is used as the subscription name. (with the get/is removed
+if this is a getter)
+
+Note that it is considered a deployment error if more than one subscription method has the same name with the same
+arguments.
+
+==== Description
+
+Subscriptions may be documented with descriptions in the schema by adding a `@Description` annotation with
+documentation text as the annotation value to the subscription method. For example:
+
+.DescriptionExample
+[source,java,numbered]
+----
+@Subscription
+@Description("Get real-time stock price updates")
+public Flow.Publisher<Stock> stockQuote(@Name("stockCode") String code) {
+    return stockService.getPriceUpdates(code);
+}
+----
+
+This would generate a schema that would include:
+
+.DescriptionSchemaExample
+[source,numbered]
+----
+type Subscription {
+  ...
+  "Get real-time stock price updates"
+  stockQuote(stockCode: String): Stock
+  #...
+----
+
+The `@Description` annotation can also be placed on parameters of a subscription method to provide documentation for
+the arguments. For example:
+
+.ArgumentDescriptionExample
+[source,java,numbered]
+----
+@Subscription
+@Description("Get real-time stock price updates")
+public Flow.Publisher<Stock> stockQuote(@Name("stockCode") @Description("Stock symbol code") String code) {
+    return stockService.getPriceUpdates(code);
+}
+----
+
+This would generate a schema that would include:
+
+.ArgumentDescriptionSchemaExample
+[source,numbered]
+----
+type Subscription {
+  ...
+  "Get real-time stock price updates"
+  stockQuote(
+  "Stock symbol code"
+  stockCode: String
+  ): Stock
+  #...
+----
+
+==== Void Subscriptions
+
+By its very nature, subscription methods must return some value stream, thus it is considered a deployment error for a
+method with a `void` return type to be annotated with `@Subscription`. If a void method is annotated with the
+`@Subscription` annotation, the implementation must prevent the application from starting and should provide a log
+message indicating that this is not allowed.
+
+==== Transport Mechanism
+
+Unlike queries and mutations which can be executed over HTTP (see <<queries>> and <<mutations>>), subscriptions require
+a persistent connection to stream multiple values over time. To ensure portability across implementations, this
+specification mandates support for WebSocket as the transport protocol.
+
+Implementations must support the graphql-ws protocol version 6.0.x
+(https://github.com/enisdenjo/graphql-ws/blob/master/PROTOCOL.md) for subscription operations over WebSocket.
+This protocol provides a standardized way to:
+
+* Establish and maintain subscription connections
+* Send subscription requests with operation, variables, and extensions
+* Receive streamed subscription events
+* Handle errors and connection lifecycle
+
+Implementations may optionally support additional transport mechanisms such as Server-Sent Events (SSE), chunked
+transfer encoding, or other streaming protocols, but WebSocket support using the graphql-ws protocol version 6.0.x
+is required as the minimum baseline for interoperability.

@@ -1,0 +1,4 @@
+# testSubscriptions - Validate subscription methods appear in schema correctly
+1| type Subscription           |   heroUpdates: SuperHero                   |   Subscription without arguments should map correctly
+2| type Subscription           |   heroByName(name: String): SuperHero      |   Subscription with arguments should map correctly
+3| type Subscription           |   teamUpdates: Team                        |   Subscription returning different type should map correctly

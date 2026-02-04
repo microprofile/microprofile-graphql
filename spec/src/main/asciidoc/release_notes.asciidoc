@@ -18,6 +18,16 @@
 // Contributors:
 // Jean-Francois James, Phillip Krüger, Andy McCright, Jean-Baptiste Roux, Bojan Tomic, Adam Anderson
 
+[[release_notes_21]]
+== Release Notes for MicroProfile GraphQL 2.1
+
+==== API/SPI Changes
+
+* Added support for GraphQL Subscriptions via `@Subscription` annotation
+  - Subscription methods return `Flow.Publisher<T>` for streaming real-time updates
+  - Implementations may support additional reactive types
+  - Schema generation includes `type Subscription { ... }` definitions
+
 [[release_notes_20]]
 == Release Notes for MicroProfile GraphQL 2.0
 

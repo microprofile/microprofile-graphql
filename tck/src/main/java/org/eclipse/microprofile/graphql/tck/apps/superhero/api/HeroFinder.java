@@ -28,6 +28,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Flow;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +49,7 @@ import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.NumberFormat;
 import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.graphql.Source;
+import org.eclipse.microprofile.graphql.Subscription;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.DuplicateSuperHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroLocator;
@@ -694,6 +701,116 @@ public class HeroFinder {
     public Team removeTeam(@Name("teamName") String teamName) throws UnknownTeamException {
         LOG.log(Level.INFO, "removeTeam invoked [{0}]", teamName);
         return heroDB.removeTeam(teamName);
+    }
+
+    // Subscriptions
+
+    @Subscription
+    @Description("Receive updates when any hero changes")
+    public Flow.Publisher<SuperHero> heroUpdates() {
+        LOG.info("heroUpdates subscription created");
+        java.util.concurrent.SubmissionPublisher<SuperHero> publisher =
+                new java.util.concurrent.SubmissionPublisher<>();
+
+        // Use a scheduler to emit items periodically, simulating real-time updates.
+        // This pattern is realistic for subscriptions that emit data based on events,
+        // timers, or periodic polling rather than emitting a fixed collection.
+        return new Flow.Publisher<SuperHero>() {
+            private final AtomicBoolean started = new AtomicBoolean(false);
+            private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+            @Override
+            public void subscribe(Flow.Subscriber<? super SuperHero> subscriber) {
+                publisher.subscribe(subscriber);
+
+                // Start emitting when first subscriber connects
+                if (started.compareAndSet(false, true)) {
+                    SuperHero[] heroes = heroDB.getAllHeroes().toArray(new SuperHero[0]);
+                    AtomicInteger index = new AtomicInteger(0);
+
+                    // Schedule periodic emission of heroes
+                    scheduler.scheduleAtFixedRate(() -> {
+                        int i = index.getAndIncrement();
+                        if (i < 3 && i < heroes.length) {
+                            publisher.submit(heroes[i]);
+                        } else {
+                            publisher.close();
+                            scheduler.shutdown();
+                        }
+                    }, 0, 50, TimeUnit.MILLISECONDS);
+                }
+            }
+        };
+    }
+
+    @Subscription
+    public Flow.Publisher<SuperHero> heroByName(@Name("name") String heroName) {
+        LOG.log(Level.INFO, "heroByName subscription created [{0}]", heroName);
+        java.util.concurrent.SubmissionPublisher<SuperHero> publisher =
+                new java.util.concurrent.SubmissionPublisher<>();
+
+        // Scheduled emission pattern (see heroUpdates for explanation)
+        return new Flow.Publisher<SuperHero>() {
+            private final AtomicBoolean started = new AtomicBoolean(false);
+            private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+            @Override
+            public void subscribe(Flow.Subscriber<? super SuperHero> subscriber) {
+                publisher.subscribe(subscriber);
+
+                if (started.compareAndSet(false, true)) {
+                    scheduler.schedule(() -> {
+                        try {
+                            SuperHero hero = heroDB.getHero(heroName);
+                            if (hero != null) {
+                                publisher.submit(hero);
+                            }
+                            publisher.close();
+                            scheduler.shutdown();
+                        } catch (UnknownHeroException e) {
+                            publisher.closeExceptionally(e);
+                            scheduler.shutdown();
+                        } catch (Exception e) {
+                            publisher.closeExceptionally(e);
+                            scheduler.shutdown();
+                        }
+                    }, 0, TimeUnit.MILLISECONDS);
+                }
+            }
+        };
+    }
+
+    @Subscription
+    @Description("Receive team updates")
+    public Flow.Publisher<Team> teamUpdates() {
+        LOG.info("teamUpdates subscription created");
+        java.util.concurrent.SubmissionPublisher<Team> publisher = new java.util.concurrent.SubmissionPublisher<>();
+
+        // Scheduled emission pattern (see heroUpdates for explanation)
+        return new Flow.Publisher<Team>() {
+            private final AtomicBoolean started = new AtomicBoolean(false);
+            private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+            @Override
+            public void subscribe(Flow.Subscriber<? super Team> subscriber) {
+                publisher.subscribe(subscriber);
+
+                if (started.compareAndSet(false, true)) {
+                    Team[] teams = heroDB.getAllTeams().toArray(new Team[0]);
+                    AtomicInteger index = new AtomicInteger(0);
+
+                    scheduler.scheduleAtFixedRate(() -> {
+                        int i = index.getAndIncrement();
+                        if (i < 2 && i < teams.length) {
+                            publisher.submit(teams[i]);
+                        } else {
+                            publisher.close();
+                            scheduler.shutdown();
+                        }
+                    }, 0, 50, TimeUnit.MILLISECONDS);
+                }
+            }
+        };
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {

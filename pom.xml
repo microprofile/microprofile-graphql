@@ -37,6 +37,7 @@
         <version.testng>7.12.0</version.testng>
         <version.arquillian>1.10.0.Final</version.arquillian>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
+        <version.vertx>4.5.24</version.vertx>
     </properties>
 
     <dependencyManagement>
@@ -57,6 +58,11 @@
                 <groupId>org.jboss.shrinkwrap</groupId>
                 <artifactId>shrinkwrap-api</artifactId>
                 <version>${version.shrinkwrap}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-core</artifactId>
+                <version>${version.vertx}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
