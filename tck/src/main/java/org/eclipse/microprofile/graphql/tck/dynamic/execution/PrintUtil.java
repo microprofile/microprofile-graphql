@@ -75,7 +75,9 @@ public class PrintUtil {
             }
 
             sw.write("\n\n");
-            sw.write("variables input = " + prettyJson(testData.getVariables()));
+            sw.write("variables input = " + prettyJson(testData.getVariables() != null
+                    ? Json.createObjectBuilder(testData.getVariables()).build()
+                    : null));
             sw.write("\n\n");
             sw.write("http headers input = " + testData.getHttpHeaders());
             sw.write("\n\n");

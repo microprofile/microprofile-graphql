@@ -29,6 +29,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -252,7 +253,8 @@ public class ExecutionDynamicTest extends Arquillian {
         return sb.toString();
     }
 
-    private HttpResponse postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders) {
+    private HttpResponse postHTTPRequest(String graphQL, Map<String, Object> variables,
+            Map<String, String> httpHeaders) {
         try {
             URL url = new URL(this.uri + PATH);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -304,12 +306,14 @@ public class ExecutionDynamicTest extends Arquillian {
         connection.setReadTimeout(READ_TIMEOUT);
     }
 
-    private JsonObject createRequestBody(String graphQL, JsonObject variables) {
-        // Create the request
+    private JsonObject createRequestBody(String graphQL, Map<String, Object> variables) {
         if (variables == null || variables.isEmpty()) {
-            variables = Json.createObjectBuilder().build();
+            variables = Collections.emptyMap();
         }
-        return Json.createObjectBuilder().add(QUERY, graphQL).add(VARIABLES, variables).build();
+        return Json.createObjectBuilder()
+                .add(QUERY, graphQL)
+                .add(VARIABLES, Json.createObjectBuilder(variables))
+                .build();
     }
 
     private void postRequest(HttpURLConnection connection, JsonObject body) throws IOException {

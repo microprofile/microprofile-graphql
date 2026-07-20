@@ -18,11 +18,10 @@
 package org.eclipse.microprofile.graphql.tck.dynamic.execution;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-
-import jakarta.json.JsonObject;
 
 /**
  * Simple Holder for Test Data sets
@@ -34,7 +33,7 @@ public class TestData {
     private Set<String> input;
     private Properties httpHeaders;
     private Set<String> output;
-    private JsonObject variables;
+    private Map<String, Object> variables;
     private String prepare;
     private String cleanup;
     private Properties properties;
@@ -53,7 +52,7 @@ public class TestData {
             Set<String> input,
             Properties httpHeaders,
             Set<String> output,
-            JsonObject variables,
+            Map<String, Object> variables,
             String prepare,
             String cleanup,
             Properties properties) {
@@ -84,7 +83,7 @@ public class TestData {
         return output;
     }
 
-    public JsonObject getVariables() {
+    public Map<String, Object> getVariables() {
         return variables;
     }
 
@@ -124,7 +123,7 @@ public class TestData {
         this.output.add(output);
     }
 
-    public void setVariables(JsonObject variables) {
+    public void setVariables(Map<String, Object> variables) {
         this.variables = variables;
     }
 

@@ -28,8 +28,10 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -41,8 +43,12 @@ import org.eclipse.microprofile.graphql.tck.dynamic.DynamicPaths;
 import org.testng.annotations.DataProvider;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonNumber;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
+import jakarta.json.JsonString;
+import jakarta.json.JsonValue;
 
 /**
  * Provide test data for GraphQL Endpoint from the implementation's /src/test/resources/tests directory and the
@@ -165,7 +171,7 @@ public class GraphQLTestDataProvider {
                             }
                             case "variables.json" : {
                                 String content = getFileContent(file);
-                                testData.setVariables(toJsonObject(content));
+                                testData.setVariables(toVariablesMap(content));
                                 break;
                             }
                             case "test.properties" : {
@@ -233,12 +239,47 @@ public class GraphQLTestDataProvider {
         return directories;
     }
 
-    private static JsonObject toJsonObject(String jsonString) {
+    private static Map<String, Object> toVariablesMap(String jsonString) {
         if (jsonString == null || jsonString.isEmpty()) {
             return null;
         }
         try (JsonReader jsonReader = Json.createReader(new StringReader(jsonString))) {
-            return jsonReader.readObject();
+            return jsonObjectToMap(jsonReader.readObject());
+        }
+    }
+
+    private static Map<String, Object> jsonObjectToMap(JsonObject obj) {
+        Map<String, Object> map = new HashMap<>();
+        for (Map.Entry<String, JsonValue> entry : obj.entrySet()) {
+            map.put(entry.getKey(), jsonValueToObject(entry.getValue()));
+        }
+        return map;
+    }
+
+    private static Object jsonValueToObject(JsonValue value) {
+        switch (value.getValueType()) {
+            case STRING :
+                return ((JsonString) value).getString();
+            case NUMBER :
+                JsonNumber number = (JsonNumber) value;
+                return number.isIntegral() ? number.longValue() : number.doubleValue();
+            case TRUE :
+                return Boolean.TRUE;
+            case FALSE :
+                return Boolean.FALSE;
+            case NULL :
+                return null;
+            case OBJECT :
+                return jsonObjectToMap(value.asJsonObject());
+            case ARRAY :
+                JsonArray arr = value.asJsonArray();
+                List<Object> list = new ArrayList<>();
+                for (JsonValue item : arr) {
+                    list.add(jsonValueToObject(item));
+                }
+                return list;
+            default :
+                return value.toString();
         }
     }
 
