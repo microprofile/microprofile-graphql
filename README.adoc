@@ -43,7 +43,7 @@ It provides an alternative, though not necessarily a replacement for REST.
 
 GraphQL was developed internally by Facebook in 2012 before being publicly released in 2015.
 
-On 7 November 2018, the GraphQL project was moved from Facebook to the newly-established https://www.linuxfoundation.org/press-release/2018/11/intent_to_form_graphql/[GraphQL foundation], hosted by the non-profit Linux Foundation. 
+On 7 November 2018, the GraphQL project was moved from Facebook to the newly-established https://www.linuxfoundation.org/press/press-release/intent_to_form_graphql[GraphQL Foundation], hosted by the non-profit https://www.linuxfoundation.org/[Linux Foundation].    
 This is a significant milestone in terms of industry and community adoption.  
 GraphQL is used by many large and small customers including Atlassian, Coursera, Facebook, GitHub, PayPal, Twitter, and https://graphql.org/users/[many more].
 
