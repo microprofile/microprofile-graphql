@@ -18,11 +18,14 @@
 //
 image:https://github.com/eclipse/microprofile-graphql/workflows/Build/badge.svg[link="https://github.com/eclipse/microprofile-graphql/actions"]
 image:https://javadoc.io/badge2/org.eclipse.microprofile.graphql/microprofile-graphql-api/javadoc.svg[link="https://javadoc.io/doc/org.eclipse.microprofile.graphql/microprofile-graphql-api"] 
-image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gitter.im/eclipse/microprofile-graphql"]
+image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gitter.im/eclipse/microprofile-graphql"] 
 
 == Microprofile GraphQL Specification
 
-Read the https://download.eclipse.org/microprofile/microprofile-graphql-1.0/microprofile-graphql.html[MicroProfile GraphQL 1.0] Specification
+Read the https://download.eclipse.org/microprofile/microprofile-graphql-2.0/microprofile-graphql-spec-2.0.html[MicroProfile GraphQL 2.0] Specification (latest release).
+
+> NOTE: This branch includes our current work on v2.1 of the specification.
+
 
 === Generating the API and JavaDoc
 
