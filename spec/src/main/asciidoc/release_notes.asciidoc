@@ -42,10 +42,7 @@ There are no functional changes introduced in this release, except the dependenc
 [[release_notes_10]]
 == Release Notes for MicroProfile GraphQL 1.0
 
-//TODO: note that these are broken links - based on other MP projects - ensure these are working before release
-http://download.eclipse.org/microprofile/microprofile-graphql-1.0/microprofile-graphql.pdf[MicroProfile GraphQL Spec PDF]
-http://download.eclipse.org/microprofile/microprofile-graphql-1.0/microprofile-graphql.html[MicroProfile GraphQL Spec HTML]
-http://download.eclipse.org/microprofile/microprofile-graphql-1.0/apidocs/[MicroProfile GraphQL Spec Javadocs]
+Initial release.
 
 Key features:
 
