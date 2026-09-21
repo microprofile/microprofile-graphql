@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
+[[queries]]
 === Queries
 
-[[queries]]
-Queries allows a user to ask for all or specific fields on an object or collection of objects.
+Queries allow a user to ask for all or specific fields on an object or collection of objects.
 
 ==== API Annotation
 For classes that are annotated with `@GraphQLApi`, implementations must create a query in the schema for every method

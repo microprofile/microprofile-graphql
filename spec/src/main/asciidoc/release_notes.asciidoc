@@ -21,7 +21,7 @@
 [[release_notes_21]]
 == Release Notes for MicroProfile GraphQL 2.1
 
-==== API/SPI Changes
+=== API/SPI Changes
 
 * Added support for GraphQL Subscriptions via `@Subscription` annotation
   - Subscription methods return `Flow.Publisher<T>` for streaming real-time updates
@@ -33,19 +33,16 @@
 
 A full list of changes delivered in the 2.0 release can be found at link:https://github.com/eclipse/microprofile-graphql/milestone/10[MicroProfile GraphQL 2.0 Milestone].
 
-==== Incompatible Changes
+=== Incompatible Changes
 This release aligns with Jakarta EE 9.1 (link:https://github.com/eclipse/microprofile-graphql/issues/386[386]), so it won't work with earlier versions of Jakarta or Java EE.
 
-==== API/SPI Changes
+=== API/SPI Changes
 There are no functional changes introduced in this release, except the dependency updating from javax to jakarta.
 
 [[release_notes_10]]
 == Release Notes for MicroProfile GraphQL 1.0
 
-//TODO: note that these are broken links - based on other MP projects - ensure these are working before release
-http://download.eclipse.org/microprofile/microprofile-graphql-1.0/microprofile-graphql.pdf[MicroProfile GraphQL Spec PDF]
-http://download.eclipse.org/microprofile/microprofile-graphql-1.0/microprofile-graphql.html[MicroProfile GraphQL Spec HTML]
-http://download.eclipse.org/microprofile/microprofile-graphql-1.0/apidocs/[MicroProfile GraphQL Spec Javadocs]
+Initial release.
 
 Key features:
 
