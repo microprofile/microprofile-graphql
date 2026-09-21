@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.eclipse.microprofile</groupId>
         <artifactId>microprofile-parent</artifactId>
-        <version>3.4</version>
+        <version>3.7</version>
     </parent>
     <groupId>org.eclipse.microprofile.graphql</groupId>
     <artifactId>microprofile-graphql-parent</artifactId>
@@ -37,6 +37,8 @@
         <version.testng>7.12.0</version.testng>
         <version.arquillian>1.10.0.Final</version.arquillian>
         <version.shrinkwrap>1.2.6</version.shrinkwrap>
+        <staging.prefix>microprofile-graphql</staging.prefix>
+
     </properties>
 
     <dependencyManagement>
