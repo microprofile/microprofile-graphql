@@ -27,6 +27,13 @@
   - Subscription methods return `Flow.Publisher<T>` for streaming real-time updates
   - Implementations may support additional reactive types
   - Schema generation includes `type Subscription { ... }` definitions
+* Added `value` to the `@Source` annotation, so the field name can be given as `@Source("name")`
+  - `@Source(name = "...")` is deprecated in favour of `value`
+
+=== TCK Changes
+
+* Added tests for Subscriptions
+* The TCK no longer depends on Vert.x; WebSocket tests use `java.net.http.WebSocket`
 
 [[release_notes_20]]
 == Release Notes for MicroProfile GraphQL 2.0
