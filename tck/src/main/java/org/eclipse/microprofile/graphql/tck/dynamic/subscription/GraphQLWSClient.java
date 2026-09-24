@@ -23,10 +23,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
@@ -45,6 +48,7 @@ import jakarta.json.JsonReader;
  */
 public class GraphQLWSClient implements AutoCloseable {
     private static final Logger LOG = Logger.getLogger(GraphQLWSClient.class.getName());
+    private static final int SEND_TIMEOUT_SECONDS = 10;
 
     // Protocol message types
     private static final String MESSAGE_CONNECTION_INIT = "connection_init";
@@ -207,9 +211,14 @@ public class GraphQLWSClient implements AutoCloseable {
     }
 
     @Override
-    public void close() throws IOException {
+    public synchronized void close() throws IOException {
         if (webSocket != null && !webSocket.isInputClosed() && !webSocket.isOutputClosed()) {
-            webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "");
+            try {
+                await(webSocket.sendClose(WebSocket.NORMAL_CLOSURE, ""), "close");
+            } catch (RuntimeException e) {
+                // The server may already be closing the connection; that must not fail the test
+                LOG.warning(e.getMessage());
+            }
         }
     }
 
@@ -241,11 +250,27 @@ public class GraphQLWSClient implements AutoCloseable {
         }
     }
 
-    private void sendMessage(JsonObject message) {
+    /**
+     * java.net.http.WebSocket allows only one outstanding send, and a send started while another is pending fails
+     * through its returned future rather than by throwing. Sends are therefore serialized and awaited, so a message is
+     * never silently dropped.
+     */
+    private synchronized void sendMessage(JsonObject message) {
         if (webSocket != null && !webSocket.isOutputClosed()) {
-            webSocket.sendText(message.toString(), true);
+            await(webSocket.sendText(message.toString(), true), "send " + message.getString("type"));
         } else {
             LOG.severe("WebSocket is not open, cannot send message");
+        }
+    }
+
+    private static void await(CompletableFuture<?> future, String action) {
+        try {
+            future.get(SEND_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Interrupted while waiting to " + action, e);
+        } catch (ExecutionException | TimeoutException e) {
+            throw new RuntimeException("Failed to " + action, e);
         }
     }
 
